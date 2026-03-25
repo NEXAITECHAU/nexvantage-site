@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NexVantage - AI-Powered Software & Automation Solutions. Custom AI integrations, automation workflows, and intelligent tools for businesses in Sydney, Australia.">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta property="og:title" content="NexVantage - AI-Powered Software & Automation Solutions">
+    <meta property="og:description" content="We specialise in creating software that helps businesses utilise AI and build automated workflows.">
+    <meta property="og:url" content="https://www.nexvantage.com.au/">
+    <meta property="og:type" content="website">
+    <title>NexVantage - AI-Powered Software & Automation Solutions</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M8 1v6M8 14v1M1 8h6M14 8h2M3 3l4 4M13 13l-4-4M13 3l-4 4M3 13l4-4' stroke='%23FFD700' stroke-width='1' stroke-linecap='round'/></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1420 50%, #0f0f1a 100%);
+            background-attachment: fixed;
+            color: #c4c4c4;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    rgba(0, 0, 0, 0.15) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Pixel border canvas */
+        #pixelBorder {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Ember particles canvas */
+        #emberCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        main {
+            position: relative;
+            z-index: 3;
+        }
+
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        h1, h2, h3 {
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid rgba(139, 105, 20, 0.4);
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        p {
+            color: #b0b0b0;
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: #FFD700;
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(196, 164, 50, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #ff7828;
+            text-shadow: 0 0 8px rgba(255, 120, 40, 0.6);
+        }
+
+        /* Hero Section */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(26, 20, 32, 0.8), rgba(10, 10, 15, 0.95));
+        }
+
+        .hero-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .lightning-bolt {
+            display: inline-block;
+            font-size: 1.2em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+            50% { opacity: 0.6; text-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+        }
+
+        .tagline {
+            color: rgba(255, 120, 40, 0.7);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .hero-description {
+            max-width: 700px;
+            color: #a0a0a0;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        /* Product Cards */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: rgba(180, 140, 60, 0.04);
+            border: 1px solid rgba(139, 105, 20, 0.2);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, rgba(196, 164, 50, 0), rgba(196, 164, 50, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            border-color: rgba(196, 164, 50, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .product-name {
+            color: #FFD700;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-tagline {
+            color: rgba(255, 120, 40, 0.6);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .product-description {
+            color: #a0a0a0;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .product-price, .product-status {
+            color: #C4A432;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .product-link {
+            display: inline-block;
+            color: #ff7828;
+            border: 1px solid rgba(255, 120, 40, 0.3);
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .product-link:hover {
+            border-color: rgba(255, 120, 40, 0.8);
+            background: rgba(255, 120, 40, 0.05);
+        }
+
+        /* About Section */
+        #about {
+            background: linear-gradient(to bottom, rgba(15, 15, 26, 0.5), rgba(10, 10, 15, 0.8));
+        }
+
+        .about-content {
+            background: rgba(180, 140, 60, 0.04);
+            border: 1px solid rgba(139, 105, 20, 0.2);
+            padding: 2rem;
+            max-width: 800px;
+        }
+
+        .about-content p {
+            color: #b0b0b0;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(to bottom, rgba(10, 10, 15, 0.8), rgba(15, 15, 26, 0.5));
+            text-align: center;
+        }
+
+        .contact-box {
+            background: rgba(180, 140, 60, 0.04);
+            border: 1px solid rgba(139, 105, 20, 0.2);
+            padding: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-email {
+            display: inline-block;
+            color: #FFD700;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(196, 164, 50, 0.3);
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-email:hover {
+            border-color: rgba(196, 164, 50, 0.8);
+            background: rgba(196, 164, 50, 0.05);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .contact-info {
+            color: #a0a0a0;
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(139, 105, 20, 0.2);
+            padding: 2rem;
+            text-align: center;
+            color: #808080;
+            font-size: 0.9rem;
+            background: rgba(10, 10, 15, 0.9);
+        }
+
+        footer a {
+            color: #C4A432;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                flex-direction: column;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 2rem 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            .hero-description {
+                font-size: 0.95rem;
+            }
+
+            .product-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="pixelBorder"></canvas>
+    <canvas id="emberCanvas"></canvas>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="hero-title">
+                <span class="lightning-bolt">‚ö°</span>
+                <h1>NexVantage</h1>
+                <span class="lightning-bolt">‚ö°</span>
+            </div>
+            <p class="tagline">AI-POWERED SOFTWARE & AUTOMATION SOLUTIONS</p>
+            <p class="hero-description">
+                We specialise in creating software that helps businesses utilise AI and build automated workflows.
+                From intelligent automation templates to custom AI integrations, we forge the tools that give your business the edge.
+            </p>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products">
+            <h2>Our Products</h2>
+            <div class="products-grid">
+                <!-- AutomationForge -->
+                <div class="product-card">
+                    <div class="product-name">AutomationForge</div>
+                    <div class="product-tagline">Pre-built AI Workflows</div>
+                    <p class="product-description">
+                        100+ pre-built AI workflow templates for n8n. From email triage to developer tools.
+                        Import, configure, automate.
+                    </p>
+                    <div class="product-price">From $29/template or $499 mega bundle</div>
+                    <a href="#automationforge" class="product-link">Explore ‚ûú</a>
+                </div>
+
+                <!-- NexFuel -->
+                <div class="product-card">
+                    <div class="product-name">NexFuel</div>
+                    <div class="product-tagline">Smart Fuel Comparison</div>
+                    <p class="product-description">
+                        Australia's smartest fuel price comparison app. AI-powered predictions, real-time prices,
+                        never overpay again.
+                    </p>
+                    <div class="product-status">Status: Coming Soon</div>
+                    <a href="#nexfuel" class="product-link">Notify Me ‚ûú</a>
+                </div>
+
+                <!-- Custom Solutions -->
+                <div class="product-card">
+                    <div class="product-name">Custom Solutions</div>
+                    <div class="product-tagline">Bespoke Integrations</div>
+                    <p class="product-description">
+                        Bespoke AI integrations and workflow automation built for your business.
+                        n8n, Supabase, React Native, and more.
+                    </p>
+                    <a href="#contact" class="product-link">Get in Touch ‚ûú</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <h2>About NexVantage</h2>
+            <div class="about-content">
+                <p>
+                    Based in Sydney, Australia, NexVantage is dedicated to empowering businesses through
+                    intelligent automation and AI integration. We understand that every business is unique,
+                    which is why we offer both battle-tested templates and custom solutions tailored to your needs.
+                    Whether you're looking to streamline operations with n8n workflows or integrate cutting-edge
+                    AI capabilities, we're here to forge the tools that drive your success.
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2>Get In Touch</h2>
+            <div class="contact-box">
+                <p>Ready to forge your next automation solution?</p>
+                <a href="mailto:hello@nexvantage.com.au" class="contact-email">hello@nexvantage.com.au</a>
+                <div class="contact-info">
+                    <p>Sydney, Australia</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 NexVantage. All rights reserved. | <a href="https://www.nexvantage.com.au/">nexvantage.com.au</a></p>
+    </footer>
+
+    <script>
+        // Pixel Border Canvas
+        function setupPixelBorder() {
+            const canvas = document.getElementById('pixelBorder');
+            const ctx = canvas.getContext('2d');
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                drawPixelBorder();
+            }
+
+            function drawPixelBorder() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const borderWidth = 8;
+                const pixelSize = 2;
+                const goldColor = '#8B6914';
+
+                // Draw pixel borders on all sides
+                for (let i = 0; i < borderWidth; i += pixelSize) {
+                    // Top
+                    ctx.fillStyle = `rgba(139, 105, 20, ${0.3 * (1 - i / borderWidth)})`;
+                    ctx.fillRect(0, i, canvas.width, pixelSize);
+                    // Bottom
+                    ctx.fillRect(0, canvas.height - i - pixelSize, canvas.width, pixelSize);
+                    // Left
+                    ctx.fillRect(i, 0, pixelSize, canvas.height);
+                    // Right
+                    ctx.fillRect(canvas.width - i - pixelSize, 0, pixelSize, canvas.height);
+                }
+
+                // Draw corner pixels
+                const cornerSize = 20;
+                ctx.fillStyle = '#8B6914';
+                // Top-left corner
+                for (let i = 0; i < cornerSize; i += pixelSize) {
+                    ctx.fillRect(i, i, pixelSize, pixelSize);
+                }
+                // Top-right corner
+                for (let i = 0; i < cornerSize; i += pixelSize) {
+                    ctx.fillRect(canvas.width - i - pixelSize, i, pixelSize, pixelSize);
+                }
+                // Bottom-left corner
+                for (let i = 0; i < cornerSize; i += pixelSize) {
+                    ctx.fillRect(i, canvas.height - i - pixelSize, pixelSize, pixelSize);
+                }
+                // Bottom-right corner
+                for (let i = 0; i < cornerSize; i += pixelSize) {
+                    ctx.fillRect(canvas.width - i - pixelSize, canvas.height - i - pixelSize, pixelSize, pixelSize);
+                }
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+        }
+
+        // Ember Particles Canvas
+        function setupEmberParticles() {
+            const canvas = document.getElementById('emberCanvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const particleCount = 20;
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+
+                reset() {
+                    // Spawn on edges
+                    const edge = Math.floor(Math.random() * 4);
+                    switch(edge) {
+                        case 0: // top
+                            this.x = Math.random() * window.innerWidth;
+                            this.y = -10;
+                            break;
+                        case 1: // right
+                            this.x = window.innerWidth + 10;
+                            this.y = Math.random() * window.innerHeight;
+                            break;
+                        case 2: // bottom
+                            this.x = Math.random() * window.innerWidth;
+                            this.y = window.innerHeight + 10;
+                            break;
+                        case 3: // left
+                            this.x = -10;
+                            this.y = Math.random() * window.innerHeight;
+                            break;
+                    }
+
+                    this.vx = (Math.random() - 0.5) * 2;
+                    this.vy = (Math.random() - 0.5) * 2;
+                    this.life = 1;
+                    this.maxLife = Math.random() * 2 + 3;
+                    this.size = Math.random() * 2 + 1;
+                }
+
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.life += 1;
+                    return this.life <= this.maxLife;
+                }
+
+                draw() {
+                    const alpha = (1 - (this.life / this.maxLife)) * 0.6;
+                    ctx.fillStyle = `rgba(255, 120, 40, ${alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            // Initialize particles
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    if (particles[i].update()) {
+                        particles[i].draw();
+                    } else {
+                        particles[i].reset();
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            animate();
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            setupPixelBorder();
+            setupEmberParticles();
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
