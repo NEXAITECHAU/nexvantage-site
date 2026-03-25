@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page not found - NexVantage">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>404 - Page Not Found | NexVantage</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M8 1v6M8 14v1M1 8h6M14 8h2M3 3l4 4M13 13l-4-4M13 3l-4 4M3 13l4-4' stroke='%23FFD700' stroke-width='1' stroke-linecap='round'/></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1420 50%, #0f0f1a 100%);
+            background-attachment: fixed;
+            color: #c4c4c4;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15) 0px,
+                    rgba(0, 0, 0, 0.15) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Pixel border canvas */
+        #pixelBorder {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Ember particles canvas */
+        #emberCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        main {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 2rem;
+            max-width: 700px;
+        }
+
+        h1 {
+            color: #FFD700;
+            font-size: clamp(3rem, 15vw, 5rem);
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        h2 {
+            color: rgba(255, 120, 40, 0.7);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        p {
+            color: #a0a0a0;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .error-box {
+            background: rgba(180, 140, 60, 0.04);
+            border: 1px solid rgba(139, 105, 20, 0.2);
+            padding: 2.5rem;
+            margin: 2rem 0;
+        }
+
+        .error-code {
+            font-size: 2.5rem;
+            color: #C4A432;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .error-message {
+            color: #b0b0b0;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .error-description {
+            color: #909090;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .home-link {
+            display: inline-block;
+            color: #ff7828;
+            border: 1px solid rgba(255, 120, 40, 0.4);
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .home-link:hover {
+            border-color: rgba(255, 120, 40, 0.8);
+            background: rgba(255, 120, 40, 0.05);
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: '404';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;;
+            opacity: 0.8;
+        }
+
+        .glitch-text::before {
+            animation: glitch-1 0.3s infinite;
+            color: rgba(255, 120, 40, 0.8);
+            z-index: -1;
+            text-shadow: -2px 0 #FFD700;
+        }
+
+        .glitch-text::after {
+            animation: glitch-2 0.3s infinite;
+            color: rgba(196, 164, 50, 0.8);
+            z-index: -2;
+            text-shadow: 2px 0 #ff7828;
+        }
+
+        @keyframes glitch-1 {
+            0% {
+                clip-path: inset(40% 0 61% 0);
+                transform: translate(-2px, -2px);
+            }
+            20% {
+                clip-path: inset(92% 0 1% 0);
+                transform: translate(2px, 2px);
+            }
+            40% {
+                clip-path: inset(43% 0 1% 0);
+                transform: translate(-2px, 2px);
+            }
+            60% {
+                clip-path: inset(25% 0 58% 0);
+                transform: translate(2px, -2px);
+            }
+            80% {
+                clip-path: inset(54% 0 7% 0);
+                transform: translate(-2px, -2px);
+            }
+            100% {
+                clip-path: inset(58% 0 43% 0);
+                transform: translate(2px, 2px);
+            }
+        }
+
+        @keyframes glitch-2 {
+            0% {
+                clip-path: inset(27% 0 58% 0);
+                transform: translate(2px, 2px);
+            }
+            20% {
+                clip-path: inset(74% 0 58% 0);
+                transform: translate(-2px, -2px);
+            }
+            40% {
+                clip-path: inset(17% 0 58% 0);
+                transform: translate(2px, -2px);
+            }
+            60% {
+                clip-path: inset(36% 0 12% 0);
+                transform: translate(-2px, 2px);
+            }
+            80% {
+                clip-path: inset(68% 0 32% 0);
+                transform: translate(2px, 2px);
+            }
+            100% {
+                clip-path: inset(0% 0 58% 0);
+                transform: translate(-2px, -2px);
+            }
+        }
+
+        .lightning-accent {
+            color: #FFD700;
+            animation: flash 3s ease-in-out infinite;
+        }
+
+        @keyframes flash {
+            0%, 100% {
+                opacity: 0.4;
+                text-shadow: none;
+            }
+            50% {
+                opacity: 1;
+                text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            }
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(139, 105, 20, 0.2);
+            color: #808080;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: #C4A432;
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(196, 164, 50, 0.4);
+        }
+
+        footer a:hover {
+            color: #FFD700;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .error-box {
+                padding: 2rem;
+            }
+
+            p {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1rem;
+            }
+
+            .error-box {
+                padding: 1.5rem;
+            }
+
+            p {
+                font-size: 0.85rem;
+            }
+
+            .home-link {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="pixelBorder"></canvas>
+    <canvas id="emberCanvas"></canvas>
+
+    <main>
+        <h1><span class="glitch-text">404</span></h1>
+        <h2><span class="lightning-accent">‚ö°</span> Page Not Found <span class="lightning-accent">‚ö°</span></h2>
+
+        <div class="error-box">
+            <div class="error-code">ERROR 404</div>
+            <div class="error-message">The forge couldn't find what you were looking for.</div>
+            <div class="error-description">
+                It seems the path you're following has been lost in the digital forge.
+                The page you requested doesn't exist or has been moved to another realm.
+            </div>
+        </div>
+
+        <p>Return to the main forge and try again.</p>
+        <a href="https://www.nexvantage.com.au/" class="home-link">‚Üê Back to NexVantage</a>
+
+        <footer>
+            <p>&copy; 2026 NexVantage. | <a href="https://www.nexvantage.com.au/">nexvantage.com.au</a></p>
+        </footer>
+    </main>
+
+    <script>
+        // Pixel Border Canvas
+        function setupPixelBorder() {
+            const canvas = document.getElementById('pixelBorder');
+            const ctx = canvas.getContext('2d');
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                drawPixelBorder();
+            }
+
+            function drawPixelBorder() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const borderWidth = 8;
+                const pixelSize = 2;
+
+                // Draw pixel borders on all sides
+                for (let i = 0; i < borderWidth; i += pixelSize) {
+                    // Top
+                    ctx.fillStyle = `rgba(139, 105, 20, ${0.3 * (1 - i / borderWidth)})`;
+                    ctx.fillRect(0, i, canvas.width, pixelSize);
+                    // Bottom
+                    ctx.fillRect(0, canvas.height - i - pixelSize, canvas.width, pixelSize);
+                    // Left
+                    ctx.fillRect(i, 0, pixelSize, canvas.height);
+                    // Right
+                    ctx.fillRect(canvas.width - i - pixelSize, 0, pixelSize, canvas.height);
+                }
+
+                // Draw corner pixels
+                const cornerSize = 20;
+                ctx.fillStyle = '#8B6914';
+                // Top-left corner
+                for (let i = 0; i < cornerSize; i += pixelSize) {
+                    ctx.fillRect(i, i, pixelSize, pixelSize);
+                }
+                // Top-right corner
+                for (let i = 0; i < cornerSize; i += pixelSize) {
+                    ctx.fillRect(canvas.width - i - pixelSize, i, pixelSize, pixelSize);
+                }
+                // Bottom-left corner
+                for (let i = 0; i < cornerSize; i += pixelSize) {
+                    ctx.fillRect(i, canvas.height - i - pixelSize, pixelSize, pixelSize);
+                }
+                // Bottom-right corner
+                for (let i = 0; i < cornerSize; i += pixelSize) {
+                    ctx.fillRect(canvas.width - i - pixelSize, canvas.height - i - pixelSize, pixelSize, pixelSize);
+                }
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+        }
+
+        // Ember Particles Canvas
+        function setupEmberParticles() {
+            const canvas = document.getElementById('emberCanvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const particleCount = 25;
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+
+                reset() {
+                    // Spawn on edges
+                    const edge = Math.floor(Math.random() * 4);
+                    switch(edge) {
+                        case 0: // top
+                            this.x = Math.random() * window.innerWidth;
+                            this.y = -10;
+                            break;
+                        case 1: // right
+                            this.x = window.innerWidth + 10;
+                            this.y = Math.random() * window.innerHeight;
+                            break;
+                        case 2: // bottom
+                            this.x = Math.random() * window.innerWidth;
+                            this.y = window.innerHeight + 10;
+                            break;
+                        case 3: // left
+                            this.x = -10;
+                            this.y = Math.random() * window.innerHeight;
+                            break;
+                    }
+
+                    this.vx = (Math.random() - 0.5) * 2;
+                    this.vy = (Math.random() - 0.5) * 2;
+                    this.life = 1;
+                    this.maxLife = Math.random() * 2 + 3;
+                    this.size = Math.random() * 2 + 1;
+                }
+
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.life += 1;
+                    return this.life <= this.maxLife;
+                }
+
+                draw() {
+                    const alpha = (1 - (this.life / this.maxLife)) * 0.6;
+                    ctx.fillStyle = `rgba(255, 120, 40, ${alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            // Initialize particles
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    if (particles[i].update()) {
+                        particles[i].draw();
+                    } else {
+                        particles[i].reset();
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            animate();
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            setupPixelBorder();
+            setupEmberParticles();
+        });
+    </script>
+</body>
+</html>
